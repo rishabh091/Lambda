@@ -33,9 +33,20 @@ router.post('/register', bodyParser.json(), (req, res) => {
         res.send(true)
     })
     .catch((err) => {
-        res.send(500)
+        res.status(500)
         res.send(err)
     })
+})
+
+router.post('/login', bodyParser.json(), passport.authenticate('local'), async (req, res) => {
+    console.log('User ' + req.body.email + " logged in")
+    res.send('Authorized')
+})
+
+router.delete('/logout', async (req, res) => {
+    req.logOut()
+    console.log('User logged out')
+    res.send('logged out')
 })
 
 module.exports = router
