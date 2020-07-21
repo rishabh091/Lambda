@@ -16,6 +16,10 @@ mongoose.connect('mongodb+srv://Rishabh:' + process.env.PASSWORD + '@cluster0.4b
     console.log(err)
 })
 
+//userRouter
+const userRoutes = require('./routes/userRoutes')
+app.use(userRoutes)
+
 //starting server
 const server = app.listen(process.env.PORT || 8080, () => {
     console.log('Lambda server started at port : ' + server.address().port)
