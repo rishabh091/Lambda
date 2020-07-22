@@ -7,7 +7,8 @@ const mongoose = require('mongoose')
 //connect to mongodb atlas
 mongoose.connect('mongodb+srv://Rishabh:' + process.env.PASSWORD + '@cluster0.4bbqk.mongodb.net/Lambda?retryWrites=true&w=majority', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 })
 .then((result) => {
     console.log('Lambda connected to MongoDB Atlas.')

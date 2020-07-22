@@ -1,6 +1,9 @@
 const User = require('../modals/userModal')
 const bcrypt = require('bcrypt')
 
+const OTP = require('./otp')
+const mail = require('./mail')
+
 const add = (data) => {
     const user = new User(data)
     user.password = bcrypt.hashSync(user.password, 10)
@@ -16,8 +19,17 @@ const getUserById = async (id) => {
     return await User.findById(id)
 }
 
+const sendOTP = async (email) => {
+    const otp = OTP.generateOTP()
+    mail.sendMail(email, otp)
+
+    console.log('OTP : ' + otp)
+    return otp
+}
+
 module.exports = {
     add: add,
     getUserByEmail: getUserByEmail,
-    getUserById: getUserById
+    getUserById: getUserById,
+    sendOTP: sendOTP
 }

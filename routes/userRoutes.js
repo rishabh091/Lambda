@@ -49,4 +49,16 @@ router.delete('/logout', async (req, res) => {
     res.send('logged out')
 })
 
+router.post("/otp", bodyParser.json(), (req, res) => {
+    userService.sendOTP(req.body.email)
+    .then((otp) => {
+        res.status(200)
+        res.send(otp)
+    })
+    .catch((err) => {
+        res.status(500)
+        res.send(err)
+    })
+})
+
 module.exports = router
