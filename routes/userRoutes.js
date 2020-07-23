@@ -1,27 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
 const dotenv = require('dotenv')
 dotenv.config()
 
-const passport = require('passport')
-const session = require('express-session')
-const flash = require('express-flash')
+const jwt = require('jsonwebtoken')
 
 //service we created
 const userService = require('../services/userService')
-
-//custom initialize function we created
-const initializePassport = require('../config/passport.config')
-initializePassport(passport)
-
-router.use(flash())
-router.use(session({
-    secret: process.env.SECRET,
-    saveUninitialized: false,
-    resave: false
-}))
-router.use(passport.initialize())
+const jwtVerify = require('../config/jwtVerify')
 
 router.post('/register', bodyParser.json(), (req, res) => {
     const user = req.body
@@ -38,15 +26,23 @@ router.post('/register', bodyParser.json(), (req, res) => {
     })
 })
 
-router.post('/login', bodyParser.json(), passport.authenticate('local'), async (req, res) => {
-    console.log('User ' + req.body.email + " logged in")
-    res.send('\"Authorized\"')
-})
+router.post('/login', bodyParser.json(), async (req, res) => {
+    const user = await userService.getUserByEmail(req.body.email);
 
-router.delete('/logout', async (req, res) => {
-    req.logOut()
-    console.log('User logged out')
-    res.send('\"logged out\"')
+    if(user == null) {
+        res.status(403).send('\"Incorrect Email or Password\"')
+    }
+    
+    if(!bcrypt.compareSync(req.body.password, user.password)) {
+        res.status(403).send('\"Access Denied\"')
+    }
+    
+    //create and assign a token
+    const token = jwt.sign({
+        id: user._id
+    }, process.env.SECRET)
+    
+    res.header('authToken', token).status(200).send('\"Logged In\"')
 })
 
 router.post("/otp", bodyParser.json(), (req, res) => {
@@ -59,6 +55,11 @@ router.post("/otp", bodyParser.json(), (req, res) => {
         res.status(500)
         res.send(err)
     })
+})
+
+//demo
+router.get('/testAuth', jwtVerify, (req, res) => {
+    res.send('Authenticated')
 })
 
 module.exports = router
