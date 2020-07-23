@@ -3,6 +3,7 @@ const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 //connect to mongodb atlas
 mongoose.connect('mongodb+srv://Rishabh:' + process.env.PASSWORD + '@cluster0.4bbqk.mongodb.net/Lambda?retryWrites=true&w=majority', {
@@ -16,6 +17,20 @@ mongoose.connect('mongodb+srv://Rishabh:' + process.env.PASSWORD + '@cluster0.4b
 .catch((err) => {
     console.log(err)
 })
+
+let corsConfig = {
+    origin: (origin, callback) => {
+        const url = "app-lambda"
+
+        if(origin.includes(url)) {
+            callback(null, true)
+        }
+        else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+app.use(cors(corsConfig))
 
 //userRouter
 const userRoutes = require('./routes/userRoutes')
