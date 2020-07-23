@@ -22,7 +22,7 @@ let corsConfig = {
     origin: (origin, callback) => {
         const url = "app-lambda"
 
-        if(origin.includes(url)) {
+        if(origin.includes(url) || origin.includes('localhost:4200')) {
             callback(null, true)
         }
         else {
