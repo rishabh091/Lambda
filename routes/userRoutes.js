@@ -49,7 +49,7 @@ router.post("/otp", bodyParser.json(), (req, res) => {
     userService.sendOTP(req.body.email)
     .then((otp) => {
         res.status(200)
-        res.send(otp)
+        res.send(JSON.stringify(otp))
     })
     .catch((err) => {
         res.status(500)
