@@ -42,7 +42,7 @@ router.post('/login', bodyParser.json(), async (req, res) => {
         id: user._id
     }, process.env.SECRET)
     
-    res.header('authToken', token).status(200).send('\"Logged In\"')
+    res.status(200).send({ token: token })
 })
 
 router.post("/otp", bodyParser.json(), (req, res) => {
