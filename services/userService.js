@@ -27,9 +27,22 @@ const sendOTP = async (email) => {
     return otp
 }
 
+const updateProfile = (user) => {
+    const updated_columns = {
+        name: user.name,
+        userName: user.userName,
+        bio: user.bio,
+        gender: user.gender
+    }
+    console.log(user.name + ' updated')
+
+    return User.updateOne({ _id: user._id }, updated_columns)
+}
+
 module.exports = {
     add: add,
     getUserByEmail: getUserByEmail,
     getUserById: getUserById,
-    sendOTP: sendOTP
+    sendOTP: sendOTP,
+    updateProfile: updateProfile
 }

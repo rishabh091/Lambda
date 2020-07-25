@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         data: Buffer,
         maxlength: 8000
-    }
+    },
+    gender: String
 })
 
 const User = mongoose.model('User', userSchema)

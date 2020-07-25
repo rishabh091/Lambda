@@ -62,4 +62,18 @@ router.get('/testAuth', jwtVerify, (req, res) => {
     res.send('Authenticated')
 })
 
+//get my profile
+router.get('/getProfile', jwtVerify, (req, res) => {
+    userService.getUserByEmail(req.query.email)
+    .then(user => res.status(200).send(user))
+    .catch(err => res.status(501).send(err))
+})
+
+//edit user
+router.post('/updateProfile', bodyParser.json(), jwtVerify, (req, res) => {
+    userService.updateProfile(req.body)
+    .then(user => res.status(200).send(user))
+    .catch(err => res.status(501).send(err))
+})
+
 module.exports = router
