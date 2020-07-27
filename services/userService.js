@@ -40,7 +40,6 @@ const updateProfile = (user) => {
 }
 
 const updateEmail = (email, id) => {
-    console.log(user.email + ' credentials updated')
     return User.updateOne({ _id: id }, { email: email })
 }
 
