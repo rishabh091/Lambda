@@ -8,7 +8,7 @@ const sendMail = (email, otp) => {
     const content = fs.readFileSync('static/mail.html').toString('utf-8')
     .replace('{otp}', otp)
 
-    let transporter = nodemailer.createTransport({
+    let Transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: process.env.EMAIL,
@@ -23,7 +23,7 @@ const sendMail = (email, otp) => {
         text: content
     }
 
-    transporter.sendMail(mailOptions, (err, info) => {
+    Transport.sendMail(mailOptions, (err, info) => {
         if(err) {
             console.log(err)
         }
