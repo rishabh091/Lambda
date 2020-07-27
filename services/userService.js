@@ -39,10 +39,16 @@ const updateProfile = (user) => {
     return User.updateOne({ _id: user._id }, updated_columns)
 }
 
+const updateEmail = (email, id) => {
+    console.log(user.email + ' credentials updated')
+    return User.updateOne({ _id: id }, { email: email })
+}
+
 module.exports = {
     add: add,
     getUserByEmail: getUserByEmail,
     getUserById: getUserById,
     sendOTP: sendOTP,
-    updateProfile: updateProfile
+    updateProfile: updateProfile,
+    updateEmail: updateEmail
 }
