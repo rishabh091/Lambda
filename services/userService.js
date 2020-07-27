@@ -46,7 +46,7 @@ const updateEmail = (email, id) => {
 
 const updatePassword = (json) => {
     const update_columns = {
-        password = bcrypt.hashSync(json.password, 10)
+        password: json.password
     }
     
     return User.updateOne({ _id: json._id }, update_columns)

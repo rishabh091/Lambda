@@ -77,6 +77,8 @@ router.post('/updateProfile', bodyParser.json(), jwtVerify, (req, res) => {
 })
 
 router.get('/updateEmail', jwtVerify, (req, res) => {
+    console.log(req.query.id)
+
     userService.updateEmail(req.query.mail, req.query.id)
     .then(res => res.status(200).send(res))
     .catch(err => { console.log(err); res.status(501).send(err) })
