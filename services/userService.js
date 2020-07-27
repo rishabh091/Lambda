@@ -44,11 +44,20 @@ const updateEmail = (email, id) => {
     return User.updateOne({ _id: id }, { email: email })
 }
 
+const updatePassword = (json) => {
+    const update_columns = {
+        password = bcrypt.hashSync(json.password, 10)
+    }
+    
+    return User.updateOne({ _id: json._id }, update_columns)
+}
+
 module.exports = {
     add: add,
     getUserByEmail: getUserByEmail,
     getUserById: getUserById,
     sendOTP: sendOTP,
     updateProfile: updateProfile,
-    updateEmail: updateEmail
+    updateEmail: updateEmail,
+    updatePassword: updatePassword
 }

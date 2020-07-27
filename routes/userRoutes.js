@@ -82,4 +82,10 @@ router.get('/updateEmail', jwtVerify, (req, res) => {
     .catch(err => { console.log(err); res.status(501).send(err) })
 })
 
+router.post('/updatePassword', bodyParser.json(), jwtVerify, (req, res) => {
+    userService.updatePassword(req.body)
+    .then(res => res.status(200).send(res))
+    .catch(err => { console.log(err); res.status(501).send(err) })
+})
+
 module.exports = router
