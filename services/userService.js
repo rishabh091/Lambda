@@ -32,7 +32,8 @@ const updateProfile = (user) => {
         name: user.name,
         userName: user.userName,
         bio: user.bio,
-        gender: user.gender
+        gender: user.gender,
+        profilePicture: user.profilePicture
     }
     console.log(user.name + ' updated')
 
