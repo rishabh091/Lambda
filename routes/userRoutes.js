@@ -88,4 +88,11 @@ router.post('/updatePassword', bodyParser.json(), jwtVerify, (req, res) => {
     .catch(err => { console.log(err); res.status(501).send(err) })
 })
 
+router.get('/search/user', jwtVerify, (req, res) => {
+    const search = req.query.search
+    userService.search(search)
+    .then(result => res.status(200).send(result))
+    .catch(err => res.status(501).send(err))
+})
+
 module.exports = router

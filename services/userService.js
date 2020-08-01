@@ -52,6 +52,13 @@ const updatePassword = (json) => {
     return User.updateOne({ _id: json._id }, update_columns)
 }
 
+const search = (data) => {
+    return User.find({ $or: [
+        { name: {$regex: data, $options: 'i'} },
+        { userName: {$regex: data, $options: 'i'} }
+    ] })
+}
+
 module.exports = {
     add: add,
     getUserByEmail: getUserByEmail,
@@ -59,5 +66,6 @@ module.exports = {
     sendOTP: sendOTP,
     updateProfile: updateProfile,
     updateEmail: updateEmail,
-    updatePassword: updatePassword
+    updatePassword: updatePassword,
+    search: search
 }
