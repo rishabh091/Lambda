@@ -69,6 +69,12 @@ router.get('/getProfile', jwtVerify, (req, res) => {
     .catch(err => res.status(501).send(err))
 })
 
+router.get('/getUser', jwtVerify, (req, res) => {
+    userService.getUserById(req.query.id)
+    .then(user => res.status(200).send(user))
+    .catch(err => res.status(501).send(err))
+})
+
 //edit user
 router.post('/updateProfile', bodyParser.json(), jwtVerify, (req, res) => {
     userService.updateProfile(req.body)
