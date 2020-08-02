@@ -36,6 +36,10 @@ app.use(cors(corsConfig))
 const userRoutes = require('./routes/userRoutes')
 app.use(userRoutes)
 
+//followRouter
+const followRoutes = require('./routes/followRoutes')
+app.use(followRoutes)
+
 //starting server
 const server = app.listen(process.env.PORT || 8080, () => {
     console.log('Lambda server started at port : ' + server.address().port)
